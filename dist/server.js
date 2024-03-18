@@ -6,8 +6,9 @@ console.log('WS waiting for the connection...');
 function onConnect(wsClient) {
     console.log('new user connected', { wsClient: wsClient });
     wsClient.on('message', function (message) {
-        console.log('new message came', message, JSON.parse(message));
-        axios.post('http://192.168.0.105:80?cmd=' + JSON.parse(message).cmd)
+        var data = JSON.parse(message);
+        console.log('new message came', message, data);
+        axios.post('http://192.168.0.105:80?' + 'cmd=' + data.cmd + '&value=' + data.value)
             .catch(function (e) { return console.log('new message ERROR: ', e); });
     });
     wsClient.on('close', function () {

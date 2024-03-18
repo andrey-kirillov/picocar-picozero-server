@@ -37,8 +37,9 @@ function onConnect(wsClient: any) {
 
     /** Message event handler **/
     wsClient.on('message', (message: any) => {
-        console.log('new message came', message, JSON.parse(message));
-        axios.post('http://192.168.0.105:80?cmd=' + JSON.parse(message).cmd)
+        const data =  JSON.parse(message);
+        console.log('new message came', message, data);
+        axios.post('http://192.168.0.105:80?' + 'cmd=' + data.cmd + '&value=' + data.value)
         // .then((response) => console.log('response: ', response))
         .catch((e) => console.log('new message ERROR: ', e));
     });
